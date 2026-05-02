@@ -1245,10 +1245,6 @@ var regexpCache = newMemoizer(func(pattern string) (*regexp.Regexp, error) {
 	return regexp.Compile(pattern)
 })
 
-// cachedRegexp returns a compiled regexp for the given pattern, using a shared
-// cache to avoid recompilation and enable thread-safe access.
-//
-
 func (c *OpContext) regexp(v Value) *regexp.Regexp {
 	v = Unwrap(v)
 	if isError(v) {

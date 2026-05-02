@@ -487,14 +487,6 @@ func appendPath(base cue.Path, label ast.Label, hidPkg string) cue.Path {
 	return cue.MakePath(fresh...)
 }
 
-// parseAtPath parses an at= selector string into a cue.Path.
-// Unlike cue.ParsePath, it handles:
-//   - Hidden field names with a $pkg qualifier, e.g. "_foo$pkg" →
-//     cue.Hid("_foo", ":pkg"), matching the syntax used inside @test(eq, ...)
-//     bodies.
-//   - Integer segments as list-index selectors, e.g. "items.0" →
-//     [items, Index(0)].
-//
 // directiveKey returns the deduplication key for a directive. Two directives
 // with the same name but different at= values are independent assertions and
 // must both survive deduplication in selectActiveDirectives.
@@ -507,6 +499,14 @@ func directiveKey(pa parsedTestAttr) string {
 	return pa.directive
 }
 
+// parseAtPath parses an at= selector string into a cue.Path.
+// Unlike cue.ParsePath, it handles:
+//   - Hidden field names with a $pkg qualifier, e.g. "_foo$pkg" →
+//     cue.Hid("_foo", ":pkg"), matching the syntax used inside @test(eq, ...)
+//     bodies.
+//   - Integer segments as list-index selectors, e.g. "items.0" →
+//     [items, Index(0)].
+//
 // Dotted paths are split on "." and each segment is processed independently,
 // so "a._foo$pkg.0" works correctly.
 func parseAtPath(at string) (cue.Path, error) {

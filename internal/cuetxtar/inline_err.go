@@ -945,7 +945,6 @@ func (r *inlineRunner) reportPosMismatch(t testing.TB, path cue.Path, directive 
 }
 
 // checkErrPositions verifies that the error positions on val match the pos=
-
 // spec in pa.  When positions don't match:
 //   - pos=[] (placeholder): update on CUE_UPDATE=1.
 //   - pos=[non-empty]: update on CUE_UPDATE=force only.
